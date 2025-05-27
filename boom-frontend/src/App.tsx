@@ -21,6 +21,7 @@ import { Toaster } from "./components/ui/toaster";
 import "./globals.css";
 import Chatpage from "./_root/pages/ChatPage";
 import ProfilePictureForm from "./_auth/forms/ProfilePictureForm";
+import Video from "./_root/pages/Video";
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
         {/* private routes */}
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
+          <Route path="/videos" element={<Video />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/saved" element={<Saved />} />
           <Route path="/all-users" element={<AllUsers />} />

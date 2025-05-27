@@ -6,6 +6,11 @@ export const sidebarLinks = [
     },
     {
       imgURL: "/assets/icons/wallpaper.svg",
+      route: "/videos",
+      label: "Video",
+    },
+    {
+      imgURL: "/assets/icons/wallpaper.svg",
       route: "/explore",
       label: "Explore",
     },

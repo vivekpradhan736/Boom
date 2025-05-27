@@ -34,4 +34,9 @@ export enum QUERY_KEYS {
     GET_CHAT = "getChat",
     GET_ALL_MESSAGES = "getAllMessages",
     CREATE_MESSAGE = "createMessage",
+
+    GET_RECENT_VIDEOS = "getRecentVideos",
+    GET_SAVED_VIDEOS = "getSavedVideos",
+
+    CHECK_PURCHASE = "checkPurchase",
   }

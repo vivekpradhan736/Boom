@@ -38,13 +38,27 @@ const mongoose_1 = __importStar(require("mongoose"));
 const videoSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    videoType: { type: String, enum: ["Short-Form", "Long-Form"], required: true },
-    videoUrl: { type: String, required: function () { return this.videoType === "Long-Form"; } },
+    videoType: {
+        type: String,
+        enum: ["Short-Form", "Long-Form"],
+        required: true,
+    },
+    videoUrl: { type: String },
     videoFileUrl: { type: String }, // Cloudinary URL for Short-Form
     videoFileId: { type: String }, // Cloudinary public_id for Short-Form
     videoThumbnailUrl: { type: String }, // Cloudinary URL for thumbnail
     videoThumbnailId: { type: String }, // Cloudinary public_id for thumbnail
     creator: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
-    price: { type: Number, default: 0, required: function () { return this.videoType === "Long-Form"; } },
+    likes: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "User" }],
+    price: {
+        type: Number,
+        default: 0,
+        //   required: [
+        //     function (this: IVideo): boolean {
+        //       return this.videoType === "Long-Form";
+        //     },
+        //     "Price is required for Long-Form videos",
+        //   ],
+    },
 }, { timestamps: true });
 exports.Video = mongoose_1.default.model("Video", videoSchema);

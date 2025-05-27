@@ -43,6 +43,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     try {
       const currentAccount = await getCurrentUser();
+      console.log("currentAccount",currentAccount)
       if (currentAccount) {
         setUser({
           id: currentAccount?._id,
@@ -52,6 +53,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           imageUrl: currentAccount?.imageUrl,
           bio: currentAccount?.bio,
           followers: currentAccount?.followers,
+          balance: currentAccount?.balance
         });
         setIsAuthenticated(true);
         setIsLoading(false);

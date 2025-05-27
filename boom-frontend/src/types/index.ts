@@ -42,10 +42,10 @@ export type INavLink = {
     title: string;
     description: string;
     videoType: string | "Short-Form" | "Long-Form";
-    videoFile: File[];
+    videoFile?: File[];
     videoUrl?: string;
-    videoThumbnail: File[];
-    price: string;
+    videoThumbnail?: File[];
+    price?: number;
   };
 
   export type IUpdateVideo = {
@@ -60,8 +60,18 @@ export type INavLink = {
     videoThumbnailId?: string;
     videoThumbnailUrl?: URL;
     videoThumbnail?: File[];
-    price?: string;
+    price?: number;
   };
+
+  export interface IVideoPurchase {
+  _id: string;
+  videoId: string;
+  userId: string;
+  purchaseDate: string;
+  price: number;
+  status: "pending" | "completed" | "failed";
+  transactionId: string;
+}
   
   export type IUser = {
     id: string;
@@ -71,6 +81,7 @@ export type INavLink = {
     imageUrl: string;
     bio: string;
     followers: string[];
+    balance: number;
   };
   
   export type INewUser = {

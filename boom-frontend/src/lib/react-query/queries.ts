@@ -41,6 +41,13 @@ import {
   uploadFile,
   getSavedPosts,
   uploadVideo,
+  getRecentVideos,
+  likeVideo,
+  saveVideo,
+  deleteSavedVideo,
+  getSavedVideos,
+  purchaseVideo,
+  checkVideoPurchase,
 } from "@/lib/mongodb/api";
 import { INewChat, INewComment, INewMessage, INewPost, IUser, INewUser, INewVideo, IUpdatePost, IUpdateUser } from "@/types";
 
@@ -236,6 +243,82 @@ export const useUploadVideo = () => {
     },
   });
 };
+
+export const useGetRecentVideos = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_RECENT_VIDEOS],
+    queryFn: getRecentVideos,
+  });
+};
+
+export const useLikeVideo = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: likeVideo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_VIDEOS],
+      });
+    },
+  });
+};
+
+export const useSaveVideo = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: saveVideo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_SAVED_VIDEOS],
+      });
+    },
+  });
+};
+
+export const useDeleteSavedVideo = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteSavedVideo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_SAVED_VIDEOS],
+      });
+    },
+  });
+};
+
+export const useGetSavedVideos = (userId: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_SAVED_VIDEOS, userId],
+    queryFn: () => getSavedVideos(userId),
+    enabled: !!userId,
+  });
+};
+
+// New purchase hooks
+export const usePurchaseVideo = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ videoId, userId }: { videoId: string; userId: string }) => purchaseVideo(videoId, userId),
+
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.CHECK_PURCHASE, variables.videoId],
+      });
+    },
+  });
+};
+
+
+export const useCheckVideoPurchase = (userId: string, videoId: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.CHECK_PURCHASE, userId, videoId],
+    queryFn: () => checkVideoPurchase(userId, videoId),
+    enabled: !!userId && !!videoId,
+  });
+};
+
+
 
 export const useGetUserPosts = (userId?: string) => {
   return useQuery({

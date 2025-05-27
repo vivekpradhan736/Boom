@@ -205,6 +205,91 @@ export async function uploadVideo(formData: FormData) {
   }
 }
 
+// ============================== GET RECENT VIDEOS
+export async function getRecentVideos() {
+  try {
+    console.log("test 1")
+    const response = await api.get("/videos/recent");
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+// ============================== LIKE / UNLIKE VIDEO
+export async function likeVideo(videoId: string, likesArray: string[]) {
+  try {
+    const response = await api.post(`/videos/${videoId}/like`, {
+      likes: likesArray,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+// ============================== SAVE VIDEO
+export async function saveVideo(userId: string, videoId: string) {
+  try {
+    const response = await api.post("/videos/save", {
+      user: userId,
+      video: videoId,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+// ============================== GET SAVED VIDEOS
+export async function getSavedVideos(userId: string) {
+  try {
+    if (!userId) throw new Error("User ID is required");
+    const response = await api.get(`/videos/saved/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+// ============================== DELETE SAVED VIDEO
+export async function deleteSavedVideo(savedRecordId: string) {
+  try {
+    await api.delete(`/videos/save/${savedRecordId}`);
+    return { status: "Ok" };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+// purchase functions
+export async function purchaseVideo(videoId: string, userId: string) {
+  try {
+    console.log("userId",userId)
+    const response = await api.post("/videos/purchase", { videoId, userId });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+export async function checkVideoPurchase(userId: string, videoId: string) {
+  try {
+    const response = await api.get(`/videos/purchases/${userId}/${videoId}`);
+    console.log("response",response)
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return { purchased: false };
+  }
+}
+
 // ============================================================
 // POSTS
 // ============================================================
