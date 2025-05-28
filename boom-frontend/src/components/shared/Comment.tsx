@@ -8,10 +8,11 @@ import { Button } from "../ui";
 import { useCreateComment } from "@/lib/react-query/queries";
 import { useToast } from "../ui/use-toast";
 import { Loader } from ".";
+import { IUser } from "../../types";
 
 type PostStatsProps = {
     post: Models.Document;
-    user: Models.Document;
+    user: IUser;
     refetchComment: () => void;
 };
 
@@ -31,7 +32,7 @@ const Comment = ({ post, user, refetchComment }: PostStatsProps) => {
         const newPost = await createComment({
             ...value,
             userId: user.id,
-            postId: post.$id,
+            postId: post._id,
         });
 
         if (newPost) {

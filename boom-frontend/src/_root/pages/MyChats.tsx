@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, forwardRef } from 'react'
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -20,12 +20,21 @@ import { useUserContext } from '@/context/AuthContext'
 import { ChatState } from '@/context/ChatContext'
 import { getReceiver } from '@/lib/validation/ChatLogics'
 
+// interface Props {
+//   fetchAgain: any;
+//   ref: React.RefObject<HTMLDivElement>;
+// }
+
 interface Props {
-  fetchAgain: any;
-  ref: React.RefObject<HTMLDivElement>;
+  fetchAgain: boolean; // Changed to boolean for clarity
 }
 
-export default function MyChats({ fetchAgain, ref }: Props) {
+// Define ref interface
+interface MyChatsRef {
+  fetchChats: () => Promise<void>;
+}
+
+const MyChats = forwardRef<MyChatsRef, Props>(({ fetchAgain }, ref) => {
   const { toast } = useToast();
   const { user: currentUser } = useUserContext();
   const { chats, setChats, selectedChat, setSelectedChat } = ChatState();
@@ -241,4 +250,6 @@ const selectUser = onSelectedChat ? JSON.parse(onSelectedChat) : null;
       </div>
     </div>
   )
-}
+});
+
+export default MyChats;
