@@ -9,7 +9,7 @@ import {
 
 import { LikedPosts } from "@/_root/pages";
 import { useUserContext } from "@/context/AuthContext";
-import { useGetUserById, useGetCurrentUserWithFollowing, useGetCurrentUserWithFollower } from "@/lib/react-query/queries";
+import { useGetUserById, useGetCurrentUserWithFollowing, useGetCurrentUserWithFollower, useGetUserPosts } from "@/lib/react-query/queries";
 import { GridPostList, Loader } from "@/components/shared";
 import { useEffect, useState, useRef } from "react";
 import FollowButton from "@/components/shared/FollowButton";
@@ -31,9 +31,11 @@ const Profile = () => {
   const { user } = useUserContext();
   const { pathname } = useLocation();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const { data: currentUser } = useGetUserById(id || "");
   const { data: myFollowingUser, isLoading: isUserLoading, refetch: refetchFollowing } = useGetCurrentUserWithFollowing();
   const { data: myFollowerUser, isLoading: isFollowerLoading } = useGetCurrentUserWithFollower();
-  console.log("myFollowerUser",myFollowerUser)
+  const { data: userPosts, isLoading: isUserPostLoading } = useGetUserPosts(currentUser?._id);
+  console.log("userPosts",userPosts)
 
   //  ----->> This code are work for Showing the User Profile Picture <<-----
 
@@ -64,7 +66,6 @@ const Profile = () => {
 
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const { data: currentUser } = useGetUserById(id || "");
   console.log("currentUser",currentUser)
 
   if (!currentUser)
@@ -190,7 +191,7 @@ const Profile = () => {
       <Routes>
         <Route
           index
-          element={<GridPostList posts={currentUser?.posts} showUser={false} />}
+          element={<GridPostList posts={userPosts?.documents} showUser={false} />}
         />
         {currentUser._id === user.id && (
           <Route path="/liked-posts" element={<LikedPosts />} />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { databases, client } from '../../lib/appwrite/config.ts';
+// import { databases, client } from '../../lib/appwrite/config.ts';
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -65,24 +65,24 @@ const Chatbox = ({fetchAgain, setFetchAgain, triggerChild2Function} : Props) => 
       setMessages(filteredMessages);
     }
 
-    const unsubscribe = client.subscribe(
-      [`databases.${databaseId}.collections.${collectionId}.documents`],
-      (response) => {
-        if (response.events.includes('databases.*.collections.*.documents.*.create')) {
-          const payload = response.payload as any
+    // const unsubscribe = client.subscribe(
+    //   [`databases.${databaseId}.collections.${collectionId}.documents`],
+    //   (response) => {
+    //     if (response.events.includes('databases.*.collections.*.documents.*.create')) {
+    //       const payload = response.payload as any
 
-        if (payload.chat.$id === selectedChat?.$id) {
-          setMessages((prev) => 
-            [...prev, payload].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
-          );
-          console.log("messages2",messages)
-          }
-        }
-      }
-    );
+    //     if (payload.chat.$id === selectedChat?.$id) {
+    //       setMessages((prev) => 
+    //         [...prev, payload].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+    //       );
+    //       console.log("messages2",messages)
+    //       }
+    //     }
+    //   }
+    // );
 
     return () => {
-      unsubscribe(); // Clean up the subscription
+      // unsubscribe(); // Clean up the subscription
     };
   }, [selectedChat?.$id, allMessage]);
 

@@ -5,7 +5,7 @@ import { PostStats } from ".";
 import { useUserContext } from "../../context/AuthContext";
 
 type GridPostListProps = {
-  posts: Models.Document[];
+  posts: Models.Document;
   showUser?: boolean;
   showStats?: boolean;
 };
@@ -16,6 +16,8 @@ const GridPostList = ({
   showStats = true,
 }: GridPostListProps) => {
   const { user } = useUserContext();
+
+  console.log("posts",posts)
 
   return (
     <ul className="grid-container">
@@ -35,8 +37,8 @@ const GridPostList = ({
         <>
         {
         posts?.map((post) => (
-        <li key={post.$id} className="relative min-w-80 h-80">
-          <Link to={`/posts/${post.$id}`} className="grid-post_link">
+        <li key={post._id} className="relative min-w-80 h-80">
+          <Link to={`/posts/${post._id}`} className="grid-post_link">
             <img
               src={post.imageUrl}
               alt="post"
