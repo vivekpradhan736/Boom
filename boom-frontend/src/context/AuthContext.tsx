@@ -11,6 +11,8 @@ export const INITIAL_USER = {
   email: "",
   imageUrl: "",
   bio: "",
+  balance: 0,
+  followers: []
 };
 
 const INITIAL_STATE = {

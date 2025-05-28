@@ -51,6 +51,16 @@ import {
 } from "@/lib/mongodb/api";
 import { INewChat, INewComment, INewMessage, INewPost, IUser, INewUser, INewVideo, IUpdatePost, IUpdateUser } from "@/types";
 
+interface LikeVideoParams {
+  videoId: string;
+  likesArray: string[];
+}
+
+interface SaveVideoParams {
+  userId: string;
+  videoId: string;
+}
+
 type VideoResponse = {
   _id: string;
   title: string;
@@ -254,10 +264,14 @@ export const useGetRecentVideos = () => {
 export const useLikeVideo = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: likeVideo,
+    mutationFn: ({ videoId, likesArray }: LikeVideoParams) =>
+      likeVideo(videoId, likesArray), // Call with params
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_VIDEOS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_SAVED_VIDEOS],
       });
     },
   });
@@ -266,7 +280,8 @@ export const useLikeVideo = () => {
 export const useSaveVideo = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: saveVideo,
+    mutationFn: ({ userId, videoId }: SaveVideoParams) =>
+      saveVideo(userId, videoId), // Call with params
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_SAVED_VIDEOS],
