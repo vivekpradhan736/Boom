@@ -36,7 +36,7 @@ const GridPostList = ({
       ) : (
         <>
         {
-        posts?.map((post) => (
+        posts?.map((post: any) => (
         <li key={post._id} className="relative min-w-80 h-80">
           <Link to={`/posts/${post._id}`} className="grid-post_link">
             <img

@@ -31,7 +31,7 @@ const ProfilePictureForm = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const { mutateAsync: uploadPicture, isPending, isError, error, data } = useUploadFile();
-  const { mutateAsync: updateUser, isLoading: isLoadingUpdate } = useUpdateUser();
+  const { mutateAsync: updateUser } = useUpdateUser();
   const { user, setUser } = useUserContext();
   console.log("user",user)
 

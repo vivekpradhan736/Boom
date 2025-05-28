@@ -33,7 +33,7 @@ const Chatbox = ({fetchAgain, setFetchAgain, triggerChild2Function} : Props) => 
   const [newMessage, setNewMessage] = useState('');
   const [fetchReceiversLoading, setFetchReceiversLoading] = useState(false);
   const {data: allMessage, isLoading: isMessageLoading, isError: isErrorMessages} = useGetAllMessages();
-  const { mutateAsync: createMessage, isLoading: isLoadingCreate } = useCreateMessage();
+  const { mutateAsync: createMessage} = useCreateMessage();
 
   const [receivers, setReceivers] = useState<ReceiverDetails>();
 

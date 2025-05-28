@@ -48,7 +48,7 @@ export default function MyChats({ fetchAgain, ref }: Props) {
   //   getReceiver(currentUser, usersId)
 
   // Query
-  const { mutateAsync: createChat, isLoading: isLoadingCreate } = useCreateChat();
+  const { mutateAsync: createChat} = useCreateChat();
 
   // Handler
   const handleCreateChat = async (userID: string) => {
@@ -161,7 +161,7 @@ const selectUser = onSelectedChat ? JSON.parse(onSelectedChat) : null;
                       </div>
                     ) : searchedUsers && searchedUsers?.total > 0 ? (
                       <div className="flex flex-col gap-2">
-                        {searchedUsers.documents.map((user) => (
+                        {searchedUsers.documents.map((user: any) => (
                           <button
                             key={user.$id}
                             onClick={() => handleCreateChat(user.$id)}
