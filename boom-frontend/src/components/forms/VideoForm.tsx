@@ -87,7 +87,7 @@ const VideoForm = ({ video, action }: VideoFormProps) => {
       } else {
         if (value.videoUrl) {
           data.append("videoUrl", value.videoUrl);
-          data.append("price", value?.price?.toString());
+          data.append("price", value.price?.toString() || "0");
         } else {
           toast({
             title: "Video URL is required for Long-Form",

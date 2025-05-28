@@ -64,7 +64,7 @@ export const VideoValidation = z.object({
   price: z
     .string()
     .optional()
-    .refine((val) => !val || !isNaN(parseFloat(val)), "Price must be a valid number")
+    // .refine((val) => !val || !isNaN(parseFloat(val)), "Price must be a valid number")
     // .transform((val) => (val ? parseFloat(val) : 0)),
 }).refine(
   (data) => {

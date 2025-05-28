@@ -49,7 +49,7 @@ import {
   purchaseVideo,
   checkVideoPurchase,
 } from "@/lib/mongodb/api";
-import { INewChat, INewComment, INewMessage, INewPost, IUser, INewUser, INewVideo, IUpdatePost, IUpdateUser } from "@/types";
+import { INewChat, INewComment, INewMessage, INewPost, INewUser, INewVideo, IUpdatePost, IUpdateUser } from "@/types";
 
 interface LikeVideoParams {
   videoId: string;
@@ -60,20 +60,6 @@ interface SaveVideoParams {
   userId: string;
   videoId: string;
 }
-
-type VideoResponse = {
-  _id: string;
-  title: string;
-  description: string;
-  creator: Pick<IUser, "id" | "name" | "username">;
-  videoType: "Short-Form" | "Long-Form";
-  videoFile: File[];
-  videoUrl?: string;
-  videoThumbnail: File[];
-  price?: number;
-  createdAt: string;
-  updatedAt: string;
-};
 
 interface UploadVideoError {
   message: string;
@@ -184,6 +170,7 @@ export const useGetPosts = () => {
   return useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
     queryFn: getInfinitePosts,
+    initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       // If there's no data, there are no more pages.
       if (lastPage && lastPage.documents.length === 0) {
