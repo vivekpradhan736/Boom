@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npm install --include=dev",
     "start": "node build/index",
     "build": "tsc -p .",
     "dev": "tsc-watch --onSuccess \"npm run start\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "", 
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
