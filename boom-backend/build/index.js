@@ -32,7 +32,7 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 // app.use(cors());
 app.use(express_1.default.json());
-const allowedOrigins = ['http://localhost:5173'];
+const allowedOrigins = ['https://boom-navy.vercel.app'];
 app.use((0, cors_1.default)({
     origin: (origin, callback) => {
         // Check if the incoming origin is in the allowedOrigins array

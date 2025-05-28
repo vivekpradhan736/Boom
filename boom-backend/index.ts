@@ -22,7 +22,7 @@ const app = express();
 // app.use(cors());
 app.use(express.json());
 
-const allowedOrigins = ['http://localhost:5173'];
+const allowedOrigins = ['https://boom-navy.vercel.app'];
 app.use(cors({
   origin: (origin : any, callback) => {
     // Check if the incoming origin is in the allowedOrigins array
